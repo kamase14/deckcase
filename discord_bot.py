@@ -4,13 +4,10 @@ import sqlite3
 import os
 import re
 
-path = "./deck.db"
-
-
 conn = sqlite3.connect('deck.db')
 c = conn.cursor()
 
-#c.execute('''CREATE TABLE deck(id INTEGER PRIMARY KEY AUTOINCREMENT, name text, recipe text, author text)''')
+c.execute('''CREATE TABLE IF NOT EXISTS deck(id INTEGER PRIMARY KEY AUTOINCREMENT, name text, recipe text, author text)''')
 
 client = discord.Client()
 
@@ -55,10 +52,6 @@ async def on_message(message):
             param = param.replace("-author", "")
             param = param.strip()
 
-
-            if param == "デブ":
-                param = "さるばーれ"
-
             c.execute('SELECT id, author, name FROM deck where author = ? ',[param])
 
             row = c.fetchall()
@@ -99,7 +92,6 @@ async def on_message(message):
         return
 
     if "/removedeck" in message.content:
-        ## WIP
         param = message.content
         param = param.replace("/removedeck","")
         param = param.strip()
@@ -116,13 +108,5 @@ async def on_message(message):
         await message.channel.send(string)
         return
 
-    if "/updatedeck" in message.content:
-        ## WIP
-        return
 
-    if "/deckcase_help" in message.content:
-        await message.channel.send("https://github.com/kamase14/deck_case/blob/master/Readme.md　をご覧ください")
-
-
-
-client.run("NTQ5ODc3NzIwNTgyOTc5NTg0.D1aT5g.vOrhCuAuyi3wydCFDiZGZzjvF1o")
+client.run("please enter your key")
